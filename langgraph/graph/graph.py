@@ -50,17 +50,29 @@ class Graph:
         self.entry_point: Optional[str] = None
         self.entry_point_branch: Optional[Branch] = None
 
-    def add_node(self, key: str, action: RunnableLike) -> None:
+    def add_node(self, *args, key: str = None, action: RunnableLike = None) -> None:
         if self.compiled:
             logger.warning(
                 "Adding a node to a graph that has already been compiled. This will "
                 "not be reflected in the compiled graph."
             )
+        # position parameters will overwrite the key-word parameters if provided
+        if len(args) > 0:
+            if callable(args[0]):  # use as a decorator
+                action = args[0]
+                key = action.__name__
+            elif isinstance(args[0], str):
+                key = args[0]
+                action = args[1]
+
+        if not isinstance(key, str):
+            raise ValueError("Key must be a str")
+        if action is None:
+            raise ValueError("Action cannot be none.")
         if key in self.nodes:
             raise ValueError(f"Node `{key}` already present.")
         if key == END:
             raise ValueError(f"Node `{key}` is reserved.")
-
         self.nodes[key] = coerce_to_runnable(action)
 
     def add_edge(self, start_key: str, end_key: str) -> None:

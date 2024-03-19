@@ -2783,3 +2783,33 @@ def test_in_one_fan_out_out_one_graph_state() -> None:
             }
         },
     ]
+
+
+def test_register_node() -> None:
+    class AgentState(TypedDict, total=False):
+        pass
+
+    # Define a new graph
+    workflow = StateGraph(AgentState)
+
+    @workflow.add_node
+    def left(data: AgentState) -> AgentState:
+        return {}
+
+    @workflow.add_node
+    def right(data: AgentState) -> AgentState:
+        return {}
+
+    def up(data: AgentState) -> AgentState:
+        return {}
+
+    def down(data: AgentState) -> AgentState:
+        return {}
+
+    workflow.add_node("up", up)
+    workflow.add_node(key="down", action=down)
+
+    assert "left" in workflow.nodes.keys()
+    assert "right" in workflow.nodes.keys()
+    assert "up" in workflow.nodes.keys()
+    assert "down" in workflow.nodes.keys()
