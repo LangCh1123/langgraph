@@ -379,33 +379,7 @@ async def test_invoke_two_processes_in_out_interrupt(mocker: MockerFixture) -> N
         c async for c in app.aget_state_history({"configurable": {"thread_id": 1}})
     ] == [
         StateSnapshot(
-            values={"input": 2},
-            next=("one",),
-            config={
-                "configurable": {
-                    "thread_id": 1,
-                    "thread_ts": AnyStr(),
-                }
-            },
-            created_at=AnyStr(),
-            metadata={"source": "input", "step": -1, "writes": 2},
-            parent_config=None,
-        ),
-        StateSnapshot(
-            values={"inbox": 3, "input": 2},
-            next=("two",),
-            config={
-                "configurable": {
-                    "thread_id": 1,
-                    "thread_ts": AnyStr(),
-                }
-            },
-            created_at=AnyStr(),
-            metadata={"source": "loop", "step": 0, "writes": None},
-            parent_config=None,
-        ),
-        StateSnapshot(
-            values={"inbox": 3, "output": 4, "input": 2},
+            values={"inbox": 4, "output": 5, "input": 3},
             next=(),
             config={
                 "configurable": {
@@ -414,47 +388,13 @@ async def test_invoke_two_processes_in_out_interrupt(mocker: MockerFixture) -> N
                 }
             },
             created_at=AnyStr(),
-            metadata={"source": "loop", "step": 1, "writes": 4},
-            parent_config=None,
-        ),
-        StateSnapshot(
-            values={"inbox": 3, "output": 4, "input": 20},
-            next=("one",),
-            config={
+            metadata={"source": "loop", "step": 6, "writes": 5},
+            parent_config={
                 "configurable": {
                     "thread_id": 1,
                     "thread_ts": AnyStr(),
                 }
             },
-            created_at=AnyStr(),
-            metadata={"source": "input", "step": 2, "writes": 20},
-            parent_config=None,
-        ),
-        StateSnapshot(
-            values={"inbox": 21, "output": 4, "input": 20},
-            next=("two",),
-            config={
-                "configurable": {
-                    "thread_id": 1,
-                    "thread_ts": AnyStr(),
-                }
-            },
-            created_at=AnyStr(),
-            metadata={"source": "loop", "step": 3, "writes": None},
-            parent_config=None,
-        ),
-        StateSnapshot(
-            values={"inbox": 21, "output": 4, "input": 3},
-            next=("one",),
-            config={
-                "configurable": {
-                    "thread_id": 1,
-                    "thread_ts": AnyStr(),
-                }
-            },
-            created_at=AnyStr(),
-            metadata={"source": "input", "step": 4, "writes": 3},
-            parent_config=None,
         ),
         StateSnapshot(
             values={"inbox": 4, "output": 4, "input": 3},
@@ -467,10 +407,69 @@ async def test_invoke_two_processes_in_out_interrupt(mocker: MockerFixture) -> N
             },
             created_at=AnyStr(),
             metadata={"source": "loop", "step": 5, "writes": None},
-            parent_config=None,
+            parent_config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
         ),
         StateSnapshot(
-            values={"inbox": 4, "output": 5, "input": 3},
+            values={"inbox": 21, "output": 4, "input": 3},
+            next=("one",),
+            config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+            created_at=AnyStr(),
+            metadata={"source": "input", "step": 4, "writes": 3},
+            parent_config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+        ),
+        StateSnapshot(
+            values={"inbox": 21, "output": 4, "input": 20},
+            next=("two",),
+            config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+            created_at=AnyStr(),
+            metadata={"source": "loop", "step": 3, "writes": None},
+            parent_config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+        ),
+        StateSnapshot(
+            values={"inbox": 3, "output": 4, "input": 20},
+            next=("one",),
+            config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+            created_at=AnyStr(),
+            metadata={"source": "input", "step": 2, "writes": 20},
+            parent_config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+        ),
+        StateSnapshot(
+            values={"inbox": 3, "output": 4, "input": 2},
             next=(),
             config={
                 "configurable": {
@@ -479,7 +478,43 @@ async def test_invoke_two_processes_in_out_interrupt(mocker: MockerFixture) -> N
                 }
             },
             created_at=AnyStr(),
-            metadata={"source": "loop", "step": 6, "writes": 5},
+            metadata={"source": "loop", "step": 1, "writes": 4},
+            parent_config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+        ),
+        StateSnapshot(
+            values={"inbox": 3, "input": 2},
+            next=("two",),
+            config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+            created_at=AnyStr(),
+            metadata={"source": "loop", "step": 0, "writes": None},
+            parent_config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+        ),
+        StateSnapshot(
+            values={"input": 2},
+            next=("one",),
+            config={
+                "configurable": {
+                    "thread_id": 1,
+                    "thread_ts": AnyStr(),
+                }
+            },
+            created_at=AnyStr(),
+            metadata={"source": "input", "step": -1, "writes": 2},
             parent_config=None,
         ),
     ]
@@ -1472,6 +1507,7 @@ async def test_conditional_graph() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     await app_w_interrupt.aupdate_state(
@@ -1516,6 +1552,7 @@ async def test_conditional_graph() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     assert [c async for c in app_w_interrupt.astream(None, config)] == [
@@ -1625,6 +1662,7 @@ async def test_conditional_graph() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     # test state get/update methods with interrupt_before
@@ -1680,6 +1718,7 @@ async def test_conditional_graph() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "2", "thread_ts": AnyStr()}},
     )
 
     await app_w_interrupt.aupdate_state(
@@ -1724,6 +1763,7 @@ async def test_conditional_graph() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "2", "thread_ts": AnyStr()}},
     )
 
     assert [c async for c in app_w_interrupt.astream(None, config)] == [
@@ -1833,6 +1873,7 @@ async def test_conditional_graph() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "2", "thread_ts": AnyStr()}},
     )
 
     # test re-invoke to continue with interrupt_before
@@ -1888,6 +1929,7 @@ async def test_conditional_graph() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "2", "thread_ts": AnyStr()}},
     )
 
     assert [c async for c in app_w_interrupt.astream(None, config)] == [
@@ -2223,6 +2265,7 @@ async def test_conditional_graph_state() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     await app_w_interrupt.aupdate_state(
@@ -2264,6 +2307,7 @@ async def test_conditional_graph_state() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     assert [c async for c in app_w_interrupt.astream(None, config)] == [
@@ -2337,6 +2381,7 @@ async def test_conditional_graph_state() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     # test state get/update methods with interrupt_before
@@ -2389,6 +2434,7 @@ async def test_conditional_graph_state() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "2", "thread_ts": AnyStr()}},
     )
 
     await app_w_interrupt.aupdate_state(
@@ -2430,6 +2476,7 @@ async def test_conditional_graph_state() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "2", "thread_ts": AnyStr()}},
     )
 
     assert [c async for c in app_w_interrupt.astream(None, config)] == [
@@ -2503,6 +2550,7 @@ async def test_conditional_graph_state() -> None:
                 }
             },
         },
+        parent_config={"configurable": {"thread_id": "2", "thread_ts": AnyStr()}},
     )
 
 
@@ -3818,6 +3866,7 @@ async def test_message_graph() -> None:
                 )
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     # modify ai message
@@ -3864,6 +3913,7 @@ async def test_message_graph() -> None:
                 )
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     assert [c async for c in app_w_interrupt.astream(None, config)] == [
@@ -3935,6 +3985,7 @@ async def test_message_graph() -> None:
                 )
             },
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
     await app_w_interrupt.aupdate_state(
@@ -3976,6 +4027,7 @@ async def test_message_graph() -> None:
             "step": 5,
             "writes": {"agent": AIMessage(content="answer", id="ai2")},
         },
+        parent_config={"configurable": {"thread_id": "1", "thread_ts": AnyStr()}},
     )
 
 
