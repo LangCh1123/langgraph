@@ -1,5 +1,6 @@
 import logging
 from collections import defaultdict
+from functools import partial
 from typing import (
     Any,
     Awaitable,
@@ -149,27 +150,36 @@ class Graph:
 
     def add_node(
         self,
-        node: Union[str, RunnableLike],
+        node: Optional[str | RunnableLike] = None,
         action: Optional[RunnableLike] = None,
         *,
         metadata: Optional[dict[str, Any]] = None,
     ) -> None:
-        if self.compiled:
-            logger.warning(
-                "Adding a node to a graph that has already been compiled. This will "
-                "not be reflected in the compiled graph."
+        def _add_node(node_name: str, action: Callable):
+            if self.compiled:
+                logger.warning(
+                    "Adding a node to a graph that has already been compiled. This will "
+                    "not be reflected in the compiled graph."
+                )
+            if node_name in self.nodes:
+                raise ValueError(f"Node `{node}` already present.")
+            if node in (START, END):
+                raise ValueError(f"Node name `{node}` is reserved.")
+            self.nodes[node_name] = NodeSpec(
+                coerce_to_runnable(action, name=node_name, trace=False), metadata
             )
-        if not isinstance(node, str):
-            action = node
-            node = getattr(action, "name", action.__name__)
-        if node in self.nodes:
-            raise ValueError(f"Node `{node}` already present.")
-        if node == END or node == START:
-            raise ValueError(f"Node `{node}` is reserved.")
 
-        self.nodes[node] = NodeSpec(
-            coerce_to_runnable(action, name=node, trace=False), metadata
-        )
+        if isinstance(node, str) and callable(action):
+            _add_node(node, action)
+            return action
+        if callable(node):
+            node_name = getattr(action, "name", action.__name__)
+            return self.add_node(node_name, node)
+        if node is None:
+            return self.add_node
+        if isinstance(node, str):
+            return partial(self.add_node, node)
+        raise ValueError("Invalid arguments")
 
     def add_edge(self, start_key: str, end_key: str) -> None:
         if self.compiled:
