@@ -11,7 +11,10 @@ Welcome to the LangGraph Tutorials! These notebooks introduce LangGraph through 
 
 Learn the basics of LangGraph through a comprehensive quick start in which you will build an agent from scratch.
 
+
 - [Quick Start](introduction.ipynb)
+- A quick video walkthrough of basic LangGraph features can be found [here](https://www.youtube.com/playlist?list=PLfaIDFEXuae16n2TWUkKq5PgJ0w6Pkwtg)
+
 
 ## Use cases
 
@@ -59,6 +62,8 @@ Learn from example implementations of graphs designed for specific scenarios and
 - [In LangSmith](chatbot-simulation-evaluation/langsmith-agent-simulation-evaluation.ipynb): Evaluate chatbots in LangSmith over a dialog dataset
 
 #### Experimental
+
+
 
 - [Web Research (STORM)](storm/storm.ipynb): Generate Wikipedia-like articles via research and multi-perspective QA
 - [TNT-LLM](tnt-llm/tnt-llm.ipynb): Build rich, interpretable taxonomies of user intentand using the classification system developed by Microsoft for their Bing Copilot application.
