@@ -1448,7 +1448,7 @@ class Pregel(PregelProtocol):
                 else:
                     yield payload
 
-        config = ensure_config(self.config, config)
+        config = ensure_config(merge_configs(self.config, config))
         callback_manager = get_async_callback_manager_for_config(config)
         run_manager = await callback_manager.on_chain_start(
             None,
