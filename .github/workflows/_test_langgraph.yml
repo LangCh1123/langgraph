@@ -53,7 +53,7 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          make test
+          make test_parallel
 
       - name: Ensure the tests did not create any additional files
         shell: bash
